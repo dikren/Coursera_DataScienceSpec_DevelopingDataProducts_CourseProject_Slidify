@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Magic of the Law of Large Numbers.</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Magic of the Law of Large Numbers.">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Magic of the Law of Large Numbers.</h1>
+    <h2>Visualizing the fact that distribution of average is just a point.</h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Goal.</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>During this short presentation I am going to visualize how the Law of Large Numbers (LLN for short) works.<br>
+Namely I am going to demonstrate the fact of convergence of average of random values to single point even when those random values can evaluate to any real number when they are alone.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Simulation of random values.</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x1 = rexp(1000, rate = 1 / 5)
+x2 = apply(matrix(rexp(1000*50, rate = 1 / 5), nrow = 50), MARGIN = 2, FUN = mean)
+x3 = apply(matrix(rexp(1000*1000, rate = 1 / 5), nrow = 1000), MARGIN = 2, FUN = mean)
+x4 = apply(matrix(rexp(1000*10000, rate = 1 / 5), nrow = 10000), MARGIN = 2, FUN = mean)
+mean(x1)
+</code></pre>
+
+<pre><code>## [1] 5.085033
+</code></pre>
+
+<pre><code class="r">mean(x2)
+</code></pre>
+
+<pre><code>## [1] 4.988919
+</code></pre>
+
+<pre><code class="r">mean(x4)
+</code></pre>
+
+<pre><code>## [1] 4.999613
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Visualisation code.</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+g1 = ggplot() + geom_histogram(aes(x = x1), binwidth = 0.1) + coord_cartesian(xlim = c(-1, 13))
+g2 = ggplot() + geom_histogram(aes(x = x2), binwidth = 0.05) + coord_cartesian(xlim = c(-1, 13))
+g3 = ggplot() + geom_histogram(aes(x = x3), binwidth = 0.05) + coord_cartesian(xlim = c(-1, 13))
+g4 = ggplot() + geom_histogram(aes(x = x4), binwidth = 0.05) + coord_cartesian(xlim = c(-1, 13))
+g = grid.arrange(g1, g2, g3, g4, ncol = 2)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Plotting.</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/plotting-1.png" alt="plot of chunk plotting"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Goal.'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Simulation of random values.'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Visualisation code.'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Plotting.'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
